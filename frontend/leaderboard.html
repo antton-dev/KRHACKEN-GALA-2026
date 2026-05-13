@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classement - Jeu des Célébrités</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="static/leaderboard.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <h2>🏆 Leaderboard</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Rang</th>
+                    <th>Joueur</th>
+                    <th>Meilleur Score</th>
+                </tr>
+            </thead>
+            <tbody id="tableau-classement">
+            </tbody>
+        </table>
+        
+        <br><br>
+        <!-- Bouton pour revenir au jeu -->
+        <button onclick="window.location.href='/'" style="background-color: #6c757d;">Retour au jeu</button>
+    </div>
+
+    
+</body>
+</html>

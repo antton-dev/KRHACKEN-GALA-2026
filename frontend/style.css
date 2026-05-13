@@ -1,0 +1,23 @@
+ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        #app { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
+        
+        /* Gestion des écrans */
+        .ecran { display: none; }
+        .ecran-actif { display: block; }
+        
+        /* Éléments visuels */
+        input { padding: 10px; font-size: 16px; width: 80%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; }
+        button { background-color: #007bff; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 10px; transition: background 0.2s; }
+        button:hover { background-color: #0056b3; }
+        
+        /* Spécifique au jeu */
+        img { max-width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+        .propositions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Couleurs des réponses */
+        .btn-correct { background-color: #28a745 !important; }
+        .btn-incorrect { background-color: #dc3545 !important; }
+
+        /* Tableau */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }

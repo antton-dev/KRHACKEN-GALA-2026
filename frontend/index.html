@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Gala du Kr[HACK]en</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!-- ÉCRAN 1 : ACCUEIL -->
+        <div id="ecran-accueil" class="ecran ecran-actif">
+            <h1>Qui est-ce ?</h1>
+            <p>Devine quelle célébrité se cache derrière le filtre bébé !</p>
+            <input type="text" id="nom-joueur" placeholder="Ton pseudo...">
+            <button onclick="startGame()">Lancer la partie</button>
+            <br>
+            <button onclick="window.location.href='/leaderboard'" style="background-color: #28a745;">🏆 Voir le classement</button>
+        </div>
+
+        <!-- ÉCRAN 2 : JEU -->
+        <div id="ecran-jeu" class="ecran">
+            <h2 id="texte-tour">Tour 1 / 10</h2>
+            <img id="image-celebrite" src="" alt="Célébrité mystère">
+            <div id="boutons-propositions" class="propositions">
+                <!-- Les boutons seront générés ici par JavaScript -->
+            </div>
+        </div>
+
+        <!-- ÉCRAN 3 : FIN ET CLASSEMENT -->
+        <div id="ecran-fin" class="ecran">
+            <h2>Partie terminée !</h2>
+            <h3>Ton score : <span id="score-final"></span>/10</h3>
+            
+            <table>
+                <thead>
+                    <tr><th>Rang</th><th>Joueur</th><th>Score</th></tr>
+                </thead>
+                <tbody id="tbody-classement">
+                    <!-- Le classement sera généré ici -->
+                </tbody>
+            </table>
+            <br>
+            <button onclick="location.reload()">Rejouer</button>
+        </div>
+    </div>
+</body>
+</html>

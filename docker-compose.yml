@@ -1,0 +1,16 @@
+services:
+  jeu-celebrites:
+    build: .
+    container_name: jeu_celebrites
+    # On supprime la section "ports", Caddy s'occupe de tout !
+    volumes:
+      - ./backend/jeu.db:/app/backend/jeu.db
+      - ./backend/images:/app/backend/images
+    restart: always
+    networks:
+      - caddy_net
+
+# On indique à ce fichier que caddy_net existe déjà ailleurs
+networks:
+  caddy_net:
+    external: true

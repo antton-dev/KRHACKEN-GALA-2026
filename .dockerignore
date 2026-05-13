@@ -1,0 +1,7 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.git/
+.vscode/
+/backend/krhacken_gala_26.db
