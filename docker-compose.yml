@@ -1,39 +1,20 @@
-version: '3.8'
-
 services:
-  # --- LE BACKEND FASTAPI ---
-  backend:
+  game-all-in-one:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: gala2026-backend
+      context: .
+      dockerfile: dockerfile
+    container_name: krhacken-gala-game
     restart: always
     env_file:
-      - ./backend/.env
+      - .env
     volumes:
-      # On monte la BDD SQLite
-      - ./backend/krhacken_gala_26.db:/app/krhacken_gala_26.db
-      # On monte le dossier des uploads pour qu'il persiste
+      # On monte la base SQLite pour qu'elle persiste
+      - ./krhacken_gala_26.db:/app/krhacken_gala_26.db
+      # On monte le dossier images pour conserver les uploads de l'administration
       - ./images:/app/images
     networks:
-      - internal_net
-      - caddy_net # Permet à ton Caddy global de joindre le backend
-
-  # --- LE FRONTEND STATIQUE (HTML/JS) ---
-  frontend:
-    image: nginx:alpine
-    container_name: gala2026-frontend
-    restart: always
-    volumes:
-      # On monte tes fichiers HTML/JS/CSS statiques dans Nginx
-      - ./frontend:/usr/share/nginx/html
-    networks:
-      - caddy_net # Permet à ton Caddy global de joindre le frontend
+      - caddy_net # Permet à ton conteneur Caddy global de le joindre
 
 networks:
-  # Réseau interne pour isoler l'application si besoin
-  internal_net:
-    driver: bridge
-  # Ton réseau de reverse proxy global (déjà existant sur ton VPS)
   caddy_net:
     external: true
