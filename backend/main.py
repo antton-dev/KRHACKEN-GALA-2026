@@ -54,7 +54,7 @@ def admin_check(credentials: HTTPBasicCredentials = Depends(security)):
 
 app.mount("/image", StaticFiles(directory="image"), name="image")
 app.mount("/images", StaticFiles(directory="images"), name="images")
-app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
+app.mount("/static", StaticFiles(directory="../frontend"), name="static")
 
 
 
