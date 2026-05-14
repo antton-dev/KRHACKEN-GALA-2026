@@ -3,9 +3,9 @@ let playerName = "";
 let questions = [];
 let currentTurn = 0;
 let score = 0;
-let wait = false; // Empêche le joueur de cliquer partout très vite
+let wait = false; 
 
-// Fonction utilitaire pour changer d'écran
+
 function displayScreen(id) {
     document.querySelectorAll('.ecran').forEach(e => e.classList.remove('ecran-actif'));
     document.getElementById(id).classList.add('ecran-actif');
@@ -20,7 +20,7 @@ async function startGame() {
     }
     playerName = input.value.trim();
 
-    // Demande la partie au backend Python
+    
     const reponse = await fetch('/api/start', { method: 'POST' });
     questions = await reponse.json();
 
@@ -64,27 +64,35 @@ function checkAnswer(clickedBtn, givenAnswer, correctAnswer) {
 
     const boutons = document.getElementById('boutons-propositions').children;
 
+    // 1. Coloration des boutons (inchangée)
     if (givenAnswer === correctAnswer) {
         clickedBtn.classList.add('btn-correct');
         score++;
     } else {
         clickedBtn.classList.add('btn-incorrect');
-        // On cherche le bon bouton pour le mettre en vert et montrer la vraie réponse
         Array.from(boutons).forEach(b => {
             if (b.innerText === correctAnswer) b.classList.add('btn-correct');
         });
     }
 
-    // On attend 1.5 seconde avant de passer au tour suivant (pour laisser le temps de lire)
-    setTimeout(() => {
-        currentTurn++;
-        if (currentTurn < questions.length) {
-            displayTurn();
-        } else {
-            endGame();
-        }
-    }, 1500);
+    // 2. NOUVEAU : On affiche le bouton "Suivant" au lieu de mettre un chrono
+    document.getElementById('btn-suivant').style.display = "block";
 }
+
+
+function nextTurn() {
+    document.getElementById('btn-suivant').style.display = "none";
+    
+    currentTurn++;
+    
+    if (currentTurn < questions.length) {
+        displayTurn(); 
+    } else {
+        endGame();
+    }
+}
+
+
 
 // --- FIN DE PARTIE ET CLASSEMENT ---
 async function endGame() {
@@ -98,6 +106,7 @@ async function endGame() {
         body: JSON.stringify({ name: playerName, score: score })
     });
 
+
     // 2. Récupération du Top 10
     const reponseBoard = await fetch('/api/leaderboard');
     const classement = await reponseBoard.json();
@@ -105,11 +114,23 @@ async function endGame() {
     // 3. Affichage dans le tableau
     const tbody = document.getElementById('tbody-classement');
     tbody.innerHTML = "";
+
+    if (score <= 4) {
+        link = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmJwMXJxbmd2eTNtOHFraWZxczV5d3c0YTBwbXA1YTNjMTgwZDMxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HenISf9DhFjaSf6/giphy.gif"
+    } else if (score > 5 && score < 10) {
+        link = "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eXBsbjJlZDg0djh6dmFsN3p0MHY0cHlicTA5Y3ZwYnB5c3pqam41bSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/Ykk7PxxEzyBfLVWgqX/giphy.gif"
+    } else if (score == 10) {
+        link = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjFhMHhlMHdzaTV6M3c1YXVyYTI2ZWV4cnh3OHU2NXljMnV0MjdwNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HeoePKZ841bZzby/giphy.gif"
+    }
+    document.getElementById('final_image').src = link ;
+
+
     classement.forEach((joueur, index) => {
+        const safeName = joueur.name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         tbody.innerHTML += `
             <tr>
                 <td>#${index + 1}</td>
-                <td>${joueur.name}</td>
+                <td>${safeName}</td>
                 <td>${joueur.best}</td>
             </tr>
         `;
