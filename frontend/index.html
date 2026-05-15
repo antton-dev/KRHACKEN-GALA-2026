@@ -1,53 +1,90 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="fantasy">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Le Gala du Kr[HACK]en</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/script.js" defer></script>
 </head>
-<body>
+<body class="min-h-screen bg-base-200">
+    <div class="min-h-screen flex items-center flex-col justify-center p-4">
+        <div class="card w-full max-w-3xl bg-base-100 shadow-xl">
+            <div class="card-body space-y-8">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold">Qui est-ce ?</h1>
+                    <p class="text-base-content/70 mt-2">Devine quelle célébrité se cache derrière le filtre bébé.</p>
+                </div>
 
-    <div id="app">
-        <!-- ÉCRAN 1 : ACCUEIL -->
-        <div id="ecran-accueil" class="ecran ecran-actif">
-            <h1>Qui est-ce ?</h1>
-            <p>Devine quelle célébrité se cache derrière le filtre bébé !</p>
-            <input type="text" id="nom-joueur" placeholder="Ton pseudo...">
-            <button onclick="startGame()">Lancer la partie</button>
-            <br>
-            <button onclick="window.location.href='/leaderboard'" style="background-color: #28a745;">🏆 Voir le classement</button>
-        </div>
+                <div id="app">
+                    <div id="ecran-accueil" class="card bg-base-100 shadow-md border border-base-200 ecran ecran-actif">
+                        <div class="card-body gap-6">
+                            <h2 class="card-title">Prêt à jouer ?</h2>
+                            <p>Entre ton pseudo et lance la partie.</p>
+                            <input type="text" id="nom-joueur" placeholder="Ton pseudo..." class="input input-bordered w-full max-w-md mx-auto" />
+                            <div class="grid gap-3 sm:grid-cols-2">
+                                <button onclick="startGame()" class="btn btn-primary">Lancer la partie</button>
+                                <button onclick="window.location.href='/leaderboard'" class="btn btn-secondary">🏆 Voir le classement</button>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- ÉCRAN 2 : JEU -->
-        <div id="ecran-jeu" class="ecran">
-            <h2 id="texte-tour">Tour 1 / 10</h2>
-            <img id="image-celebrite" src="" alt="Célébrité mystère">
-            <div id="boutons-propositions" class="propositions">
-                <!-- Les boutons seront générés ici par JavaScript -->
+                    <div id="ecran-jeu" class="card bg-base-100 shadow-md border border-base-200 ecran">
+                        <div class="card-body gap-6">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                    <h2 id="texte-tour" class="text-2xl font-semibold">Tour 1 / 10</h2>
+                                    <span id="score-actuel" class="badge badge-outline">Score : 0</span>
+                                </div>
+                                <div class="space-y-3">
+                                    <img id="image-celebrite" src="" alt="Célébrité mystère" class="rounded-xl shadow-sm" />
+                                    <progress id="progress-tour" class="progress progress-primary w-full" value="1" max="10"></progress>
+                                </div>
+                            </div>
+
+                            <div id="boutons-propositions" class="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>
+
+                            <button id="btn-suivant" onclick="nextTurn()" class="btn btn-soft btn-primary w-full" style="display: none;">Suivant</button>
+                        </div>
+                    </div>
+
+                    <div id="ecran-fin" class="card bg-base-100 shadow-md border border-base-200 ecran">
+                        <div class="card-body gap-6">
+                            <div class="text-center space-y-3">
+                                <h2 class="text-3xl font-bold">Partie terminée !</h2>
+                                <img src="" id="final_image" alt="Résultat final" class="mx-auto rounded-xl shadow-sm max-h-80 object-cover" />
+                                <h3 class="text-2xl">Ton score : <span id="score-final"></span>/10</h3>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="table w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Rang</th>
+                                            <th>Joueur</th>
+                                            <th>Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-classement"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="grid gap-3 sm:grid-cols-2">
+                                <button onclick="location.reload()" class="btn btn-secondary">Rejouer</button>
+                                <button onclick="window.location.href='/leaderboard'" class="btn btn-outline btn-secondary">Voir le classement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br>
-            <button id="btn-suivant" onclick="nextTurn()" style="display: none;">Suivant</button>
         </div>
 
-        <!-- ÉCRAN 3 : FIN ET CLASSEMENT -->
-        <div id="ecran-fin" class="ecran">
-            <h2>Partie terminée !</h2>
-            <img src="" id="final_image">
-            <h3>Ton score : <span id="score-final"></span>/10</h3>
-            
-            <table>
-                <thead>
-                    <tr><th>Rang</th><th>Joueur</th><th>Score</th></tr>
-                </thead>
-                <tbody id="tbody-classement">
-                    <!-- Le classement sera généré ici -->
-                </tbody>
-            </table>
-            <br>
-            <button onclick="location.reload()">Rejouer</button>
-        </div>
+        <footer class="footer footer-center p-7">
+            <p class="footer-title flex">Made by <a class="link" target="_blank" href="https://krhacken.org">Kr[HACK]en</a></p>
+        </footer>
     </div>
 </body>
 </html>
