@@ -1,5 +1,5 @@
 services:
-  game-all-in-one:
+  krk-gala-26:
     build:
       context: .
       dockerfile: dockerfile
@@ -8,10 +8,8 @@ services:
     env_file:
       - .env
     volumes:
-      # On monte la base SQLite pour qu'elle persiste
-      - ./krhacken_gala_26.db:/app/krhacken_gala_26.db
-      # On monte le dossier images pour conserver les uploads de l'administration
-      - ./images:/app/images
+      - ./backend/krhacken_gala_26.db:/app/backend/krhacken_gala_26.db
+      - ./backend/images:/app/backend/images
     networks:
       - caddy_net # Permet à ton conteneur Caddy global de le joindre
 

@@ -26,7 +26,6 @@ class ScorePayload(BaseModel):
         return html.escape(value)
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
@@ -87,6 +86,7 @@ def start_game(session: Session = Depends(get_session)): # Depends : automatical
         })
 
     return game
+
 
 
 @app.post("/api/score")
