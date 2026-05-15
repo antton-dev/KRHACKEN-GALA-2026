@@ -4,4 +4,4 @@ __pycache__/
 *.pyc
 .git/
 .vscode/
-/backend/krhacken_gala_26.db
+backend/krhacken_gala_26.db
