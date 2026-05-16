@@ -70,7 +70,7 @@ def start_game(session: Session = Depends(get_session)): # Depends : automatical
     game = []
 
     for correct_answer in correct_answers :
-        others = [c for c in all_celebtrities if c.id != correct_answer.id]
+        others = [c for c in all_celebtrities if c.id != correct_answer.id and c.gender == correct_answer.gender]
 
         wrong_answers = random.sample(others, 3)
 
@@ -110,7 +110,7 @@ def save_score(payload: ScorePayload, session = Depends(get_session)):
 
 
 @app.post('/api/admin/celebrity/create')
-async def add_celebrity(name: str = Form (...), image: UploadFile = File(...), session: Session = Depends(get_session), admin: str = Depends(admin_check)):
+async def add_celebrity(name: str = Form (...), image: UploadFile = File(...), gender: Gender = Form(...), session: Session = Depends(get_session), admin: str = Depends(admin_check)):
     if not image.filename.endswith(('.png', '.jpg', '.jpeg')):
         raise HTTPException(status_code=400, details="Format de fichier non supporté")
 
@@ -124,7 +124,8 @@ async def add_celebrity(name: str = Form (...), image: UploadFile = File(...), s
 
     new_celebrity = Celebrity(
         name = name,
-        image = path
+        image = path,
+        gender = gender
     )
 
     session.add(new_celebrity)
