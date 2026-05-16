@@ -2,3 +2,4 @@
 backend/krhacken_gala_26.db
 backend/image
 backend/seed.py
+backend/__pycache__
